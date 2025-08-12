@@ -4,9 +4,13 @@
  */
 package com.baolam.traditional_feast_order_management.controllers;
 
+import com.baolam.traditional_feast_order_management.interfaces.ISaveLoad;
 import com.baolam.traditional_feast_order_management.models.Customer;
 import com.baolam.traditional_feast_order_management.models.rules.CustomerRule;
 import com.baolam.traditional_feast_order_management.models.rules.RuleExpection;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,8 +19,9 @@ import java.util.List;
  *
  * @author lam01
  */
-public class CustomerManagement {
+public class CustomerManagement implements ISaveLoad {
     private final List<Customer> customers = new ArrayList();
+    private String storageName = "customers.dat";
     private CustomerRule customerRule = null;
     
     /***
@@ -122,6 +127,25 @@ public class CustomerManagement {
         return status;
     }
     
+    @Override
+    public boolean storeData()
+    {
+        boolean status = true;
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storageName)))
+        {
+            oos.writeObject(customers);
+        } catch (IOException e)
+        {
+            status = false;
+        }
+        return status;
+    }
+    
+    @Override
+    public boolean loadData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
     public boolean updateCustomer(Customer c)
     {
         return this.updateCustomer(c.getCustomerCode(), c.getName(), c.getPhoneNumber(), c.getEmail());
@@ -137,5 +161,9 @@ public class CustomerManagement {
 
     public List<Customer> getCustomers() {
         return customers;
+    }
+
+    public String getStorageName() {
+        return storageName;
     }
 }

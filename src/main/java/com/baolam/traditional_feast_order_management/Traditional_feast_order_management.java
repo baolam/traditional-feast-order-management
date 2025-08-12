@@ -93,6 +93,9 @@ public class Traditional_feast_order_management {
                 case MainMenu.Menu.UPDATE_ORDER -> {
                     updateOrder();
                 }
+                case MainMenu.Menu.SAVE_DATA -> {
+                    saveData();
+                }
                 case MainMenu.Menu.EXIT_PROGRAM -> {
                     stopProgram = true;
                 }
@@ -205,7 +208,14 @@ public class Traditional_feast_order_management {
         }
         else
         {
-            System.out.println("Developping!");
+            List<PartyBook> books = partyBookManagement.getPartyBooks();
+            partyBookView.showOrder(books);
         }
+    }
+    
+    static void saveData()
+    {
+        partyBookView.showSaveData(partyBookManagement.storeData());
+        customerView.showSaveData(customerManagement.storeData());
     }
 }

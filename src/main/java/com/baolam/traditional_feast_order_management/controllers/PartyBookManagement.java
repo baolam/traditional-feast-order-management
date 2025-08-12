@@ -4,10 +4,14 @@
  */
 package com.baolam.traditional_feast_order_management.controllers;
 
+import com.baolam.traditional_feast_order_management.interfaces.ISaveLoad;
 import com.baolam.traditional_feast_order_management.models.FeastMenu;
 import com.baolam.traditional_feast_order_management.models.PartyBook;
 import com.baolam.traditional_feast_order_management.models.rules.PartyBookRule;
 import com.baolam.traditional_feast_order_management.models.rules.RuleExpection;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,12 +19,13 @@ import java.util.Date;
  *
  * @author lam01
  */
-public class PartyBookManagement extends FeastManagement {    
+public class PartyBookManagement extends FeastManagement implements ISaveLoad {    
     /// Mã trạng thái Order.
     public enum OrderedStatus {
         ORDERED_FAILED, ORDERED_SUCCESS, ORDERED_DUPLICATE
     };
     
+    private String storageName = "feast_order_service.dat";
     private final ArrayList<PartyBook> partyBooks = new ArrayList();
     private int totalIds = 0;
     
@@ -33,6 +38,10 @@ public class PartyBookManagement extends FeastManagement {
 
     public PartyBookRule getPartyBookRule() {
         return partyBookRule;
+    }
+
+    public ArrayList<PartyBook> getPartyBooks() {
+        return partyBooks;
     }
 
     public void setPartyBookRule(PartyBookRule partyBookRule) {
@@ -195,5 +204,27 @@ public class PartyBookManagement extends FeastManagement {
     public PartyBook getLatest()
     {
         return partyBooks.get(totalIds - 1);
+    }
+    
+    @Override
+    public boolean storeData() {
+        boolean status = true;
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storageName)))
+        {
+            oos.writeObject(partyBooks);
+        } catch (IOException e)
+        {
+            status = false;
+        }
+        return status;
+    }
+
+    @Override
+    public boolean loadData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String getStorageName() {
+        return storageName;
     }
 }

@@ -13,5 +13,5 @@ Dựng theo ý tưởng mô hình MVC với thêm một số phụ trợ
 
 #### Các chức năng
 
-Dự án thực hiện các chức năng theo đề bài yêu cầu (được chức năng tù 1 đến 7). Chức năng 8 và một phần hiển thị chức năng 7 đang được
-phát triển.
+Dự án thực hiện các chức năng theo đề bài yêu cầu (được chức năng tù 1 đến 8).
+Làm cho hiển thị cho đẹp và đúng định dạng hơn (đang ngâm cứu)

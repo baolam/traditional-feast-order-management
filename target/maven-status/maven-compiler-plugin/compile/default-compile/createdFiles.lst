@@ -6,6 +6,7 @@ com\baolam\traditional_feast_order_management\models\Customer.class
 com\baolam\traditional_feast_order_management\controllers\PartyBookManagement.class
 com\baolam\traditional_feast_order_management\Traditional_feast_order_management$1.class
 com\baolam\traditional_feast_order_management\interfaces\IPartyBookRule.class
+com\baolam\traditional_feast_order_management\interfaces\ISaveLoad.class
 com\baolam\traditional_feast_order_management\models\rules\RuleExpection.class
 com\baolam\traditional_feast_order_management\views\MainMenu$Menu.class
 com\baolam\traditional_feast_order_management\controllers\FeastManagement.class

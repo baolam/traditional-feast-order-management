@@ -88,6 +88,18 @@ public class CustomerView {
         rawCustomer.addRow("Email: " + c.getEmail());
     }
     
+    public void showSaveData(boolean status)
+    {
+        if (status)
+        {
+            System.out.println("Customer data has been successfully saved to '(%s)'".formatted(_management.getStorageName()));
+        }
+        else 
+        {
+            System.out.println("Customer data has been failed to save to '(%s)'".formatted(_management.getStorageName()));
+        }
+    }
+    
     public Customer promptInforCustomer(boolean isDuplicated) throws RuleExpection
     {
         Customer customer = new Customer();

@@ -160,6 +160,52 @@ public class PartyBookView {
         }
     }
     
+    public void showOrder(List<PartyBook> books)
+    {
+        if (books.isEmpty())
+        {
+            System.out.println("No data in the system");
+        }
+        else
+        {
+            AsciiTable at = new AsciiTable();
+            at.getContext().setGrid(A7_Grids.minusBarPlusEquals());
+            
+            at.addRule();
+            at.addRow("ID", "Event date", "Customer ID", "Set Menu", "Price", "Tables", "Cost");
+            at.addRule();
+            for (PartyBook book : books)
+            {
+                this.showExactOrder(book, at);
+            }
+            at.addRule();
+            
+            String render = at.render();
+            System.out.println(render);
+        }    
+    }
+    
+    private void showExactOrder(PartyBook book, AsciiTable at)
+    {
+        FeastMenu menu = _management.retrieveMenuByCode(book.getSetMenuCode());
+        int totalCost = menu.getPrice() * book.getNumberOfTables();
+        at.addRow(book.getCustomerCode() + " (%d)".formatted(book.getBookId()), 
+            formattedDate.format(book.getPreferredDate()), book.getCustomerCode(), book.getSetMenuCode(), 
+            nf.format(menu.getPrice()), book.getNumberOfTables(), nf.format(totalCost));
+    }
+        
+    public void showSaveData(boolean status)
+    {
+        if (status)
+        {
+            System.out.println("Order data has been successfully saved to '(%s)'".formatted(_management.getStorageName()));
+        }
+        else 
+        {
+            System.out.println("Order data has been failed to save to '(%s)'".formatted(_management.getStorageName()));
+        }
+    }
+    
     public PartyBook promptPlaceOrder() throws RuleExpection
     {
         PartyBook book = new PartyBook();
